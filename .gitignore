@@ -1,0 +1,12 @@
+# Arduino IDE build folders
+build/
+*.elf
+*.bin
+*.map
+*.hex
+*.partitions.bin
+*.bootloader.bin
+
+# OS generated files
+.DS_Store
+Thumbs.db
