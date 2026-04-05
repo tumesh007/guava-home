@@ -1,38 +1,55 @@
-# 🍋 Guava Home 
+# 🍋 Project Guava Home — Standalone ESP32 Smart Home Hub
 
-Guava Home is a fully featured, standalone Smart Home Controller built on the ESP32. It combines physical automation (relays, sensors, RFID) with remote control via a Telegram Bot and a local Web Dashboard (PWA).
+## [V1.4.1 | Web-Configurable Standalone Automation]
 
-All settings—including WiFi credentials, Telegram API keys, authorized RFID tags, and sensor thresholds—are saved dynamically to the ESP32's flash memory via the Web UI. No hardcoding or re-flashing is required after the initial setup.
+Guava Home is an all-in-one smart home hub built on the ESP32 DevKit V1. It integrates dozens of components to provide security, climate, lighting, and garden automation, all configurable through a local Web UI and a remote Telegram Bot. No cloud dependency. No hardcoded variables.
 
-## ✨ Features
-* **Dual-Interface Control:** Operate devices locally via the Web Dashboard or remotely from anywhere via Telegram.
-* **Smart Lighting Automation:** Daylight-aware PIR motion sensing, coupled with an acoustic hardware interrupt (clap sensor) for manual overrides. 
-* **Dynamic Access Control:** RC522 RFID reader for door lock control. Scan unknown cards to the Web UI to easily add them to the 3 authorized user slots.
-* **Garden Management:** Automated water pump cycling with tunable ON/OFF durations and soil moisture threshold alerts.
-* **Safety Monitoring:** Real-time analog MQ-2 gas/smoke monitoring and intrusion detection via ultrasonic distance sensing.
-* **Over-The-Air (OTA) Updates:** Flash new firmware wirelessly through the Web UI or Arduino IDE.
-* **AP Rescue Mode:** Automatically broadcasts a fallback Setup Network (`192.168.4.1`) if the primary WiFi drops.
+Here is the complete Guava Home ecosystem at a glance:
 
-## 🛠 Hardware Required
-* **Microcontroller:** ESP32 DevKit V1 (38-pin)
-* **Sensors:** * DHT11 (Temperature & Humidity)
-  * HC-SR04 (Ultrasonic Distance)
-  * HC-SR501 (PIR Motion)
-  * MQ-2 (Analog Gas/Smoke)
-  * KY-037 (Sound/Clap Sensor)
-  * Standard LDR & Analog Soil Moisture Probe
-* **Modules:**
-  * MFRC522 RFID Reader
-  * 4-Channel 5V Relay Module (Active Low)
-  * 16x2 I2C LCD Display
-  * Active Buzzer
+![🍋 PROJECT GUAVA HOME Infographic](https://raw.githubusercontent.com/tumesh007/guava-home/refs/heads/main/1775408625584.png)
 
-## ⚡ Installation & First Boot
-1. Open `guava_home.ino` in the Arduino IDE.
-2. Install the required libraries (listed in the code header).
-3. Flash the code to your ESP32 via USB.
-4. On your phone or PC, connect to the new WiFi network: **Guava_Setup**.
-5. Open a browser and navigate to `http://192.168.4.1`.
+***
+
+## 🛠️ Hardware & Sensors
+
+Guava Home integrates the following physical hardware to sense and control its environment:
+
+* **ESP32 DevKit V1 (38-pin):** The core microcontroller.
+* **4-Channel Relay Module:** Controls AC power for the Fan, Light, Door Lock, and Water Pump. (Active LOW).
+* **RC522 RFID Reader:** Controls authorized door access.
+* **DHT11 Temp/Humidity Sensor:** Moniters climate.
+* **MQ-2 Gas/Smoke Sensor:** Detects hazardous levels.
+* **Ultrasonic Distance Sensor:** Triggers security and LCD wake alerts.
+* **PIR Motion Sensor:** Automates lighting.
+* **KY-037 Sound Sensor:** Provides acoustic light override (clap sensor).
+* **LDR (Photoresistor):** Monitors daylight levels.
+* **Soil Moisture Sensor:** Monitors plant water needs.
+* **I2C 16x2 LCD Screen & Active Buzzer:** For local status and feedback.
+* **Physical Buttons:** Exit Button and LCD Page Button.
+
+***
+
+## ⚙️ Core Configuration & Operation
+
+By default, Guava Home is **100% web-configurable**. All operational parameters are stored in the ESP32's flash memory using the `Preferences` library and can be adjusted in real-time.
+
+### 📶 Initial Setup & AP Mode
+
+1.  **AP Safe Mode:** If no saved Wi-Fi SSID is found, Guava Home boots into **Failsafe AP Mode**.
+2.  **Connect:** Look for the Wi-Fi network: **`Guava_Setup`**
+3.  **Config Portal:** Open your browser and go to: **`http://192.168.4.1`**
+4.  **Save Credentials:** Enter your home Wi-Fi SSID and Password. Enter your Telegram Bot Token, Chat ID, and desired OTA Password.
+5.  **Reboot:** Click "Save Settings & Reboot". The system reboots and connects to your local network, displaying its new IP address on the LCD.
+
+### 🎛️ Local Web Dashboard & Configuration
+
+You have full control over all system behavior via the main configuration page:
+
+| Configuration Pillar | Configurable Parameters (Web UI & Flash Memory) |
+| :--- | :--- |
+| **🔒 SECURITY** | **RFID slots (Users 1-3):** Save specific UIDs and associate names. <br> **Intrusion Alert Distance:** cm. <br> **Door Auto-Lock Delay (V1.4):** 1 to 60 seconds. <br> **Telegram Alerts checklist:** RFID, Intrusion, Gas. |
+| **🌡️ CLIMATE** | **Dynamic Fan Auto-ON (V1.1):** Set °C threshold. <br> **Telegram Alerts checklist:** High Temperature. |
+| **🌱 GARDEN** | **Pump cycles:** Set specific ON duration (sec) and OFF resting duration (sec). <br> **Soil Dry Alert
 6. Enter your home WiFi credentials and Telegram Bot details in the **Config** tab.
 7. Click **Save Settings & Reboot**. The ESP32 will connect to your home network and send an initialization message to your Telegram app.
 
