@@ -1,0 +1,13 @@
+build/
+*.elf
+*.bin
+*.map
+*.hex
+*.bak
+.DS_Store
+Thumbs.db
+.vscode/
+secrets.h
+credentials.h
+*.swp
+*~
