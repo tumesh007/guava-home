@@ -1,0 +1,40 @@
+# 🍋 Guava Home — Hardware & Setup Guide
+
+This guide covers the critical hardware wiring, specific library dependencies, and repository setup required to successfully compile and run the Guava Home system.
+
+## 📚 Library Dependencies
+
+Guava Home relies on several excellent open-source libraries. You can install all of these via the **Library Manager** in the Arduino IDE (`Sketch` > `Include Library` > `Manage Libraries`).
+
+* **DHT sensor library** by Adafruit
+* **Adafruit Unified Sensor** by Adafruit (Required dependency for the DHT library)
+* **LiquidCrystal_I2C** by Frank de Brabander
+* **UniversalTelegramBot** by Brian Lough
+* **MFRC522** by GithubCommunity
+
+### ⚠️ Critical Warning: ArduinoJson Version
+Guava Home is built using **ArduinoJson Version 6**. 
+Do **NOT** install ArduinoJson Version 7.x, as the syntax was completely overhauled and it will cause catastrophic compilation failures. If you are using the Library Manager, select version `6.21.5` (or any 6.x version) from the dropdown menu before clicking Install.
+
+---
+
+## ⚡ Critical Hardware Wiring (Voltage Dividers)
+
+The ESP32 is a strictly **3.3V logic** device. Providing 5V directly to its GPIO pins will permanently damage the microcontroller. 
+
+Two sensors in the Guava Home ecosystem output 5V logic and require a **Voltage Divider** to safely step the signal down to 3.3V before connecting to the ESP32:
+1. **HC-SR04 Ultrasonic Sensor** (`ECHO` pin)
+2. **MQ-2 Gas/Smoke Sensor** (`AOUT` pin)
+
+### The 1kΩ / 2kΩ Voltage Divider Circuit
+For both of the sensors listed above, wire them exactly like this:
+
+```text
+               1kΩ Resistor
+Sensor Output ───/\/\/\/\/\/\────┬─────► To ESP32 GPIO Pin
+  (5V Signal)                    │       (Safe 3.3V Signal)
+                                 <
+                                 > 2kΩ Resistor
+                                 <
+                                 │
+                                GND (ESP32 & Sensor Ground)
