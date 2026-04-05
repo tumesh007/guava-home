@@ -1,5 +1,3 @@
-# guava-home
-An ESP32-based Smart Home Controller with Web UI, Telegram integration, and RFID access.
 # 🍋 Guava Home 
 
 Guava Home is a fully featured, standalone Smart Home Controller built on the ESP32. It combines physical automation (relays, sensors, RFID) with remote control via a Telegram Bot and a local Web Dashboard (PWA).
