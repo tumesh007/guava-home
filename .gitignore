@@ -1,12 +1,35 @@
-# Arduino IDE build folders
-build/
+# Arduino
+*.o
+*.a
+*.so
 *.elf
 *.bin
-*.map
 *.hex
-*.partitions.bin
-*.bootloader.bin
 
-# OS generated files
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
-Thumbs.db
+
+# Build artifacts
+build/
+dist/
+*.pyc
+__pycache__/
+
+# Binaries
+*.exe
+*.dll
+*.dylib
+
+# Environment
+.env
+.env.local
+
+# Firmware builds
+build_output/
+*.elf
+*.bin
