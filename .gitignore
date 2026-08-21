@@ -1,35 +1,21 @@
-# Arduino
-*.o
-*.a
-*.so
-*.elf
+# Build artifacts
 *.bin
+*.elf
 *.hex
+*.zip
+*.tar.gz
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
+
+# OS
 .DS_Store
+Thumbs.db
 
-# Build artifacts
-build/
-dist/
-*.pyc
-__pycache__/
-
-# Binaries
-*.exe
-*.dll
-*.dylib
-
-# Environment
-.env
-.env.local
-
-# Firmware builds
-build_output/
-*.elf
-*.bin
+# Arduino
+*.ino.elf
+*.ino.bin
+*.ino.hex
