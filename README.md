@@ -71,6 +71,13 @@ guava-home/
 │   ├── GuavaHome_V1_4.ino
 │   ├── GuavaHome_V1_4_1_notes.txt
 │   └── GuavaHome_V1_5_1.ino   # Latest stable
+├── enclosure/                 # 3D-printable wall console (Bambu Lab A1 Mini)
+│   ├── config.scad            # Parametric geometry & bed assertions
+│   ├── base_housing.scad      # Base, powerbank bay, standoffs, keyholes
+│   ├── front_plate.scad       # Lid with LCD window, RFID pocket, buttons
+│   ├── buttons.scad           # Tactile button plungers
+│   ├── main.scad              # Assembly & single-part STL export
+│   └── README.md              # Slicing, BOM & assembly instructions
 ├── docs/                      # Documentation & assets
 │   ├── assets/
 │   │   └── screenshot.png
