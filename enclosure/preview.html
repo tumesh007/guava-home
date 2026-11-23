@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guava Home Enclosure - 3D & 2D Preview</title>
+  <title>Guava Home Enclosure v1.0 - 3D & 2D Preview</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     body { user-select: none; }
@@ -17,14 +17,14 @@
     <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[var(--card-border)]">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-        <h2 class="font-bold text-sm tracking-wide text-[var(--foreground)]">GUAVA HOME ENCLOSURE PREVIEW</h2>
-        <span class="badge bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">A1 Mini (172×156mm)</span>
+        <h2 class="font-bold text-sm tracking-wide text-[var(--foreground)]">GUAVA HOME v1.0 ENCLOSURE</h2>
+        <span class="badge bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">A1 Mini (168×136×60mm)</span>
       </div>
       
       <!-- View Mode Buttons -->
       <div class="flex items-center bg-[var(--card)] rounded-lg p-1 border border-[var(--card-border)] text-xs">
         <button id="btn-3d" class="px-3 py-1 font-semibold rounded-md transition-colors bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm">
-          3D Interactive
+          3D Interactive Model
         </button>
         <button id="btn-2d" class="px-3 py-1 font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] rounded-md transition-colors">
           2D Layout Blueprint
@@ -39,13 +39,13 @@
         <div class="flex items-center gap-4">
           <label class="flex items-center gap-2 text-[var(--muted-foreground)]">
             <span>Explode Lid:</span>
-            <input id="slider-explode" type="range" min="0" max="65" value="35" class="w-24 accent-[var(--primary)] cursor-pointer">
-            <span id="txt-explode" class="font-mono text-[var(--foreground)] tabular-nums w-8">35mm</span>
+            <input id="slider-explode" type="range" min="0" max="75" value="40" class="w-24 accent-[var(--primary)] cursor-pointer">
+            <span id="txt-explode" class="font-mono text-[var(--foreground)] tabular-nums w-8">40mm</span>
           </label>
           <label class="flex items-center gap-2 text-[var(--muted-foreground)]">
             <span>Lid Opacity:</span>
-            <input id="slider-opacity" type="range" min="15" max="100" value="85" class="w-20 accent-[var(--primary)] cursor-pointer">
-            <span id="txt-opacity" class="font-mono text-[var(--foreground)] tabular-nums w-8">85%</span>
+            <input id="slider-opacity" type="range" min="15" max="100" value="80" class="w-20 accent-[var(--primary)] cursor-pointer">
+            <span id="txt-opacity" class="font-mono text-[var(--foreground)] tabular-nums w-8">80%</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer text-[var(--muted-foreground)]">
             <input id="chk-wires" type="checkbox" checked class="accent-[var(--primary)] rounded">
@@ -66,188 +66,209 @@
         
         <!-- Quick Legend Overlays -->
         <div class="absolute bottom-2 left-2 flex flex-wrap gap-1.5 pointer-events-none text-[10px]">
-          <span class="px-2 py-0.5 rounded bg-purple-900/80 text-purple-200 border border-purple-500/40">ESP32 38-Pin</span>
-          <span class="px-2 py-0.5 rounded bg-cyan-900/80 text-cyan-200 border border-cyan-500/40">10,000mAh Powerbank</span>
-          <span class="px-2 py-0.5 rounded bg-emerald-900/80 text-emerald-200 border border-emerald-500/40">16x2 I2C LCD</span>
-          <span class="px-2 py-0.5 rounded bg-blue-900/80 text-blue-200 border border-blue-500/40">RC522 RFID</span>
-          <span class="px-2 py-0.5 rounded bg-orange-900/80 text-orange-200 border border-orange-500/40">Exit/Page Buttons</span>
+          <span class="px-2 py-0.5 rounded bg-purple-900/80 text-purple-200 border border-purple-500/40">ESP32 Purple Board</span>
+          <span class="px-2 py-0.5 rounded bg-blue-900/80 text-blue-200 border border-blue-500/40">4-Channel Relay</span>
+          <span class="px-2 py-0.5 rounded bg-rose-900/80 text-rose-200 border border-rose-500/40">MQ-2 Chimney</span>
+          <span class="px-2 py-0.5 rounded bg-teal-900/80 text-teal-200 border border-teal-500/40">DHT11 Chamber</span>
+          <span class="px-2 py-0.5 rounded bg-amber-900/80 text-amber-200 border border-amber-500/40">PIR / LDR / Mic</span>
         </div>
       </div>
     </div>
 
-    <!-- 2D Blueprint Panel (Hidden by default) -->
+    <!-- 2D Blueprint Panel -->
     <div id="view-2d-panel" class="hidden space-y-2">
       <div class="w-full bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-3 overflow-x-auto">
         <div class="text-xs text-[var(--muted-foreground)] flex items-center justify-between mb-2 pb-1 border-b border-[var(--card-border)]">
-          <span class="font-semibold text-[var(--foreground)]">TOP-DOWN INTERNAL ARCHITECTURE & WIRING MATRIX</span>
-          <span>Bambu Lab A1 Mini Safe Zone: 180×180mm (Outer Box: 172×156mm)</span>
+          <span class="font-semibold text-[var(--foreground)]">V1.0 INTERNAL ZONING & HARDWARE MAP (168 × 136 mm)</span>
+          <span>Bambu Lab A1 Mini Safe Bed: 180 × 180 mm</span>
         </div>
         
         <!-- Scaled 2D SVG Blueprint -->
-        <svg viewBox="0 0 760 520" class="w-full h-auto max-h-[460px] mx-auto select-none font-mono text-[11px]">
+        <svg viewBox="0 0 740 480" class="w-full h-auto max-h-[460px] mx-auto select-none font-mono text-[11px]">
           <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse">
               <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-opacity="0.05"/>
             </pattern>
-            <linearGradient id="pbGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#0284c7" stop-opacity="0.85"/>
-              <stop offset="100%" stop-color="#0369a1" stop-opacity="0.95"/>
+            <linearGradient id="relayGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#172554" stop-opacity="0.95"/>
             </linearGradient>
-            <linearGradient id="espGrad" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="espGrad2" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#7e22ce" stop-opacity="0.9"/>
               <stop offset="100%" stop-color="#581c87" stop-opacity="0.95"/>
             </linearGradient>
+            <linearGradient id="mq2Grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#991b1b" stop-opacity="0.75"/>
+              <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0.9"/>
+            </linearGradient>
           </defs>
 
-          <!-- Background Grid -->
-          <rect width="760" height="520" fill="#090d16" rx="10"/>
-          <rect width="760" height="520" fill="url(#grid)" rx="10"/>
+          <!-- Background -->
+          <rect width="740" height="480" fill="#090d16" rx="10"/>
+          <rect width="740" height="480" fill="url(#grid2)" rx="10"/>
 
           <!-- A1 Mini 180x180mm Bed Boundary (Dashed Gold) -->
-          <rect x="25" y="15" width="710" height="490" fill="none" stroke="#eab308" stroke-width="1.5" stroke-dasharray="6,4" rx="8" opacity="0.6"/>
-          <text x="35" y="32" fill="#eab308" font-size="10" font-weight="bold">BAMBU LAB A1 MINI BED LIMIT (180 × 180 mm)</text>
+          <rect x="20" y="15" width="700" height="450" fill="none" stroke="#eab308" stroke-width="1.5" stroke-dasharray="6,4" rx="8" opacity="0.6"/>
+          <text x="32" y="32" fill="#eab308" font-size="10" font-weight="bold">BAMBU LAB A1 MINI BED LIMIT (180 × 180 mm)</text>
 
-          <!-- Outer Enclosure Shell (172 x 156 mm) -->
-          <rect x="42" y="38" width="676" height="444" fill="#1e293b" stroke="#475569" stroke-width="3" rx="16"/>
-          <rect x="52" y="48" width="656" height="424" fill="#0f172a" stroke="#334155" stroke-width="1.5" rx="10"/>
+          <!-- Outer Enclosure Shell (168 x 136 mm) -->
+          <rect x="44" y="44" width="652" height="392" fill="#1e293b" stroke="#475569" stroke-width="3" rx="12"/>
+          <rect x="54" y="54" width="632" height="372" fill="#0f172a" stroke="#334155" stroke-width="1.5" rx="8"/>
 
-          <!-- Wall Dimensions Callouts -->
-          <text x="380" y="55" fill="#94a3b8" font-size="11" text-anchor="middle" font-weight="bold">WIDTH: 172.0 mm (Leaves 4mm brim clearance per side)</text>
-          <text x="49" y="260" fill="#94a3b8" font-size="10" transform="rotate(-90, 49, 260)" text-anchor="middle">DEPTH: 156.0 mm</text>
+          <!-- Dimensional Annotations -->
+          <text x="370" y="60" fill="#94a3b8" font-size="11" text-anchor="middle" font-weight="bold">ENCLOSURE WIDTH: 168.0 mm (6mm margin for A1 Mini outer brim)</text>
+          <text x="50" y="240" fill="#94a3b8" font-size="10" transform="rotate(-90, 50, 240)" text-anchor="middle">DEPTH: 136.0 mm (Z-Height: 60.0 mm)</text>
 
-          <!-- Rear Wall-Mount Keyholes (Dual 100mm Spacing) -->
+          <!-- Rear Wall-Mount Keyholes (100mm Spacing) -->
           <g fill="#38bdf8" stroke="#0284c7">
-            <!-- Left Keyhole -->
-            <circle cx="230" cy="85" r="9" fill="#0369a1" opacity="0.5"/>
-            <circle cx="230" cy="85" r="7"/>
-            <rect x="226" y="85" width="8" height="14" fill="#38bdf8"/>
-            <circle cx="230" cy="99" r="4" fill="#38bdf8"/>
-            <text x="230" y="70" fill="#38bdf8" font-size="9" text-anchor="middle">Wall Keyhole 1</text>
+            <!-- Left Keyhole (x = 34mm) -->
+            <circle cx="180" cy="80" r="7"/>
+            <rect x="176" y="80" width="8" height="12" fill="#38bdf8"/>
+            <circle cx="180" cy="92" r="4" fill="#38bdf8"/>
+            <text x="180" y="68" fill="#38bdf8" font-size="9" text-anchor="middle">Keyhole 1</text>
 
-            <!-- Right Keyhole -->
-            <circle cx="530" cy="85" r="9" fill="#0369a1" opacity="0.5"/>
-            <circle cx="530" cy="85" r="7"/>
-            <rect x="526" y="85" width="8" height="14" fill="#38bdf8"/>
-            <circle cx="530" cy="99" r="4" fill="#38bdf8"/>
-            <text x="530" y="70" fill="#38bdf8" font-size="9" text-anchor="middle">Wall Keyhole 2</text>
+            <!-- Right Keyhole (x = 134mm) -->
+            <circle cx="568" cy="80" r="7"/>
+            <rect x="564" y="80" width="8" height="12" fill="#38bdf8"/>
+            <circle cx="568" cy="92" r="4" fill="#38bdf8"/>
+            <text x="568" y="68" fill="#38bdf8" font-size="9" text-anchor="middle">Keyhole 2</text>
             
-            <!-- Dimension line between keyholes -->
-            <line x1="230" y1="118" x2="530" y2="118" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3,3"/>
-            <text x="380" y="115" fill="#38bdf8" font-size="10" text-anchor="middle">100.0 mm Pitch</text>
+            <line x1="180" y1="108" x2="568" y2="108" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="374" y="105" fill="#38bdf8" font-size="10" text-anchor="middle">100.0 mm Center-to-Center</text>
           </g>
 
-          <!-- Internal Partition Divider Wall -->
-          <rect x="275" y="48" width="8" height="424" fill="#475569" stroke="#64748b"/>
-          <!-- Divider Cable Pass Notch -->
-          <rect x="274" y="240" width="10" height="50" fill="#0f172a" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="2,2"/>
-          <text x="268" y="268" fill="#cbd5e1" font-size="9" text-anchor="end">5V USB Pass Notch ➔</text>
+          <!-- Main Vertical Divider Wall (X = 88mm) -->
+          <rect x="390" y="54" width="10" height="372" fill="#475569" stroke="#64748b"/>
+          <text x="382" y="240" fill="#cbd5e1" font-size="9" transform="rotate(-90, 382, 240)" text-anchor="middle">SOLID NOISE/VOLTAGE BARRIER (3.0mm)</text>
 
-          <!-- ==================== LEFT BAY: 10,000 mAh POWERBANK ==================== -->
-          <rect x="68" y="75" width="190" height="370" fill="url(#pbGrad)" stroke="#38bdf8" stroke-width="2" rx="10"/>
-          <text x="163" y="105" fill="#f0f9ff" font-size="12" font-weight="bold" text-anchor="middle">10,000 mAh POWER BANK</text>
-          <text x="163" y="122" fill="#bae6fd" font-size="10" text-anchor="middle">Dimensions: ~146 × 70 × 16 mm</text>
-          <text x="163" y="260" fill="#e0f2fe" font-size="10" text-anchor="middle">Double-sided tape / snug retention bay</text>
+          <!-- Divider Jumper Pass Notch -->
+          <rect x="388" y="200" width="14" height="60" fill="#0f172a" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2,2"/>
+          <text x="408" y="235" fill="#fde68a" font-size="8">5V & Signals</text>
+
+          <!-- ==================== LEFT BAY: LOGIC & CONTROL ==================== -->
+          <!-- 1. DHT11 Thermal Chamber (Bottom-Left) -->
+          <rect x="54" y="325" width="140" height="101" fill="#134e4a" fill-opacity="0.4" stroke="#14b8a6" stroke-width="2" rx="4"/>
+          <text x="124" y="355" fill="#5eead4" font-size="11" font-weight="bold" text-anchor="middle">DHT11 SENSOR</text>
+          <text x="124" y="372" fill="#99f6e4" font-size="9" text-anchor="middle">Thermal Isolation Wall</text>
+          <text x="124" y="386" fill="#ccfbf1" font-size="8" text-anchor="middle">(Shielded from ESP/Relay heat)</text>
+          <!-- DHT Intake Vents -->
+          <rect x="85" y="426" width="75" height="12" fill="#0d9488" stroke="#14b8a6" rx="2"/>
+          <text x="122" y="421" fill="#2dd4bf" font-size="8" text-anchor="middle">Intake Vents</text>
+
+          <!-- 2. ESP32 38-Pin Purple Breakout Board (Upper-Left) -->
+          <rect x="110" y="105" width="245" height="205" fill="url(#espGrad2)" stroke="#a855f7" stroke-width="2" rx="6"/>
+          <text x="232" y="125" fill="#faf5ff" font-size="12" font-weight="bold" text-anchor="middle">ESP32 38-PIN PURPLE BOARD</text>
           
-          <!-- Powerbank USB ports & button -->
-          <rect x="135" y="430" width="22" height="12" fill="#0f172a" stroke="#bae6fd" rx="2"/>
-          <rect x="168" y="430" width="22" height="12" fill="#0f172a" stroke="#bae6fd" rx="2"/>
-          <text x="163" y="460" fill="#7dd3fc" font-size="9" text-anchor="middle">Bottom Recharge Port</text>
-
-          <!-- Bottom Powerbank Charger Cutout in Wall -->
-          <rect x="120" y="470" width="85" height="12" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5" rx="3"/>
-
-          <!-- ==================== RIGHT BAY: ESP32 PURPLE BREAKOUT ==================== -->
-          <rect x="330" y="160" width="250" height="300" fill="url(#espGrad)" stroke="#a855f7" stroke-width="2" rx="8"/>
-          <text x="455" y="185" fill="#faf5ff" font-size="13" font-weight="bold" text-anchor="middle">ESP32 38-PIN PURPLE BREAKOUT</text>
-          <text x="455" y="202" fill="#e9d5ff" font-size="10" text-anchor="middle">78.0 × 63.0 mm PCB on 5mm Standoffs</text>
-
-          <!-- 4x Standoff screw holes -->
-          <circle cx="348" cy="180" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
-          <circle cx="562" cy="180" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
-          <circle cx="348" cy="442" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
-          <circle cx="562" cy="442" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
-
-          <!-- ESP32 Module in center -->
-          <rect x="395" y="225" width="120" height="205" fill="#18181b" stroke="#71717a" stroke-width="1.5" rx="4"/>
-          <rect x="405" y="260" width="100" height="95" fill="#71717a" stroke="#a1a1aa" rx="2"/>
-          <text x="455" y="312" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">ESP32</text>
-          <text x="455" y="327" fill="#cbd5e1" font-size="9" text-anchor="middle">DevKit V1</text>
-          <rect x="435" y="420" width="40" height="12" fill="#3f3f46" stroke="#a1a1aa" rx="2"/>
-          <text x="455" y="429" fill="#e4e4e7" font-size="8" text-anchor="middle">USB-C</text>
-
-          <!-- Screw Terminal Strips (Left & Right) -->
-          <g fill="#15803d" stroke="#4ade80" stroke-width="1">
-            <rect x="334" y="215" width="18" height="215" rx="2"/>
-            <rect x="558" y="215" width="18" height="215" rx="2"/>
+          <!-- Universal Zip-Tie Standoff Pads -->
+          <g fill="#fbbf24" stroke="#d97706" stroke-width="1">
+            <rect x="135" y="130" width="20" height="14" rx="2"/>
+            <rect x="290" y="130" width="20" height="14" rx="2"/>
+            <rect x="135" y="280" width="20" height="14" rx="2"/>
+            <rect x="290" y="280" width="20" height="14" rx="2"/>
           </g>
-          <text x="343" y="325" fill="#bbf7d0" font-size="8" transform="rotate(-90, 343, 325)" text-anchor="middle">TERMINALS</text>
-          <text x="567" y="325" fill="#bbf7d0" font-size="8" transform="rotate(90, 567, 325)" text-anchor="middle">TERMINALS</text>
+          <text x="232" y="142" fill="#fde68a" font-size="8" text-anchor="middle">Universal 3mm Zip-Tie Pads</text>
 
-          <!-- ==================== FRONT LID PROJECTION OVERLAYS (DASHED) ==================== -->
-          <!-- 16x2 LCD Overlay (Top Left of controller) -->
-          <rect x="310" y="65" width="220" height="85" fill="#15803d" fill-opacity="0.25" stroke="#22c55e" stroke-width="2" stroke-dasharray="5,3" rx="6"/>
-          <rect x="330" y="80" width="180" height="55" fill="#0284c7" fill-opacity="0.35" stroke="#38bdf8" stroke-width="1.5" rx="3"/>
-          <text x="420" y="112" fill="#4ade80" font-size="11" font-weight="bold" text-anchor="middle">16×2 I2C LCD (IN LID)</text>
+          <!-- ESP32 Module -->
+          <rect x="175" y="150" width="115" height="145" fill="#18181b" stroke="#71717a" rx="4"/>
+          <rect x="185" y="180" width="95" height="70" fill="#71717a" rx="2"/>
+          <text x="232" y="220" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">ESP32</text>
+          <text x="232" y="235" fill="#cbd5e1" font-size="8" text-anchor="middle">DevKit V1</text>
 
-          <!-- RC522 RFID Reader Overlay (Top Right of controller) -->
-          <rect x="548" y="65" width="145" height="195" fill="#1d4ed8" fill-opacity="0.25" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3" rx="6"/>
-          <circle cx="620" cy="150" r="28" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="620" y="154" fill="#93c5fd" font-size="11" font-weight="bold" text-anchor="middle">RC522 RFID</text>
-          <text x="620" y="170" fill="#bfdbfe" font-size="9" text-anchor="middle">(1.2mm Pocket)</text>
+          <!-- Left Wall USB / External Powerbank Cable Slot -->
+          <rect x="38" y="240" width="14" height="45" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5" rx="3"/>
+          <text x="32" y="267" fill="#38bdf8" font-size="9" text-anchor="end">5V Powerbank / USB ➔</text>
 
-          <!-- Tactile Buttons Overlay -->
-          <circle cx="620" cy="300" r="14" fill="#ea580c" fill-opacity="0.3" stroke="#f97316" stroke-width="2"/>
-          <text x="620" y="304" fill="#fdba74" font-size="10" font-weight="bold" text-anchor="middle">EXIT</text>
-          
-          <circle cx="620" cy="350" r="14" fill="#ea580c" fill-opacity="0.3" stroke="#f97316" stroke-width="2"/>
-          <text x="620" y="354" fill="#fdba74" font-size="10" font-weight="bold" text-anchor="middle">PAGE</text>
+          <!-- Front Lid Sensors (Overlayed on Left) -->
+          <!-- LDR Light Sensor with 14mm Shroud -->
+          <circle cx="95" cy="255" r="14" fill="#f59e0b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="2"/>
+          <circle cx="95" cy="255" r="6" fill="#fbbf24"/>
+          <text x="95" y="234" fill="#fcd34d" font-size="9" font-weight="bold" text-anchor="middle">LDR (14mm Shroud)</text>
 
-          <!-- Buzzer Vent Overlay -->
-          <circle cx="620" cy="405" r="15" fill="#475569" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2,2"/>
-          <text x="620" y="409" fill="#cbd5e1" font-size="9" text-anchor="middle">BUZZER</text>
+          <!-- Clap Mic Port (Far-Left, away from relay clicks) -->
+          <circle cx="95" cy="155" r="16" fill="#06b6d4" fill-opacity="0.3" stroke="#22d3ee" stroke-width="2"/>
+          <circle cx="95" cy="155" r="9" fill="#0891b2"/>
+          <text x="95" y="132" fill="#67e8f9" font-size="9" font-weight="bold" text-anchor="middle">CLAP MIC PORT</text>
 
-          <!-- ==================== CABLE PORTS & ROUTING ==================== -->
-          <!-- Bottom Cable Port (4x Relays, Mains, Sensors) -->
-          <rect x="420" y="470" width="110" height="12" fill="#e11d48" stroke="#f43f5e" stroke-width="1.5" rx="3"/>
-          <text x="475" y="500" fill="#fb7185" font-size="10" font-weight="bold" text-anchor="middle">⬇ BOTTOM CABLE EXIT (4× Relays, AC Load, Soil, Rain)</text>
+          <!-- ==================== RIGHT BAY: RELAYS & MQ-2 ==================== -->
+          <!-- 3. MQ-2 Gas Sensor Thermal Isolation Chamber (Top-Right) -->
+          <rect x="400" y="54" width="286" height="110" fill="url(#mq2Grad)" stroke="#ef4444" stroke-width="2" rx="4"/>
+          <text x="543" y="85" fill="#fef2f2" font-size="12" font-weight="bold" text-anchor="middle">MQ-2 GAS SENSOR CHAMBER</text>
+          <text x="543" y="100" fill="#fca5a5" font-size="9" text-anchor="middle">Continuous Heater Isolated with Thermal Wall</text>
 
-          <!-- Right Side Cable Port (HC-SR04 Ultrasonic, PIR, DHT) -->
-          <rect x="696" y="260" width="12" height="90" fill="#f59e0b" stroke="#fbbf24" stroke-width="1.5" rx="3"/>
-          <text x="702" y="235" fill="#fcd34d" font-size="9" text-anchor="middle">➡ SENSOR PORT</text>
-          <text x="702" y="248" fill="#fde68a" font-size="8" text-anchor="middle">(Ultrasonic / PIR)</text>
+          <!-- MQ-2 Top Chimney Exhaust Slots -->
+          <g fill="#f87171">
+            <rect x="440" y="44" width="6" height="12"/>
+            <rect x="465" y="44" width="6" height="12"/>
+            <rect x="490" y="44" width="6" height="12"/>
+            <rect x="515" y="44" width="6" height="12"/>
+            <rect x="540" y="44" width="6" height="12"/>
+            <rect x="565" y="44" width="6" height="12"/>
+            <rect x="590" y="44" width="6" height="12"/>
+            <rect x="615" y="44" width="6" height="12"/>
+          </g>
+          <text x="535" y="40" fill="#f87171" font-size="8" text-anchor="middle">⬆ TOP HEAT EXHAUST CHIMNEY SLOTS</text>
 
-          <!-- DuPont Jumper Wire Arch Flow (Curved Lines) -->
-          <path d="M 180 435 Q 240 370 334 360" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.8"/>
-          <path d="M 180 440 Q 250 400 334 380" fill="none" stroke="#000000" stroke-width="2.5" opacity="0.8"/>
-          <path d="M 345 220 C 310 160 330 110 380 95" fill="none" stroke="#eab308" stroke-width="2" opacity="0.75" stroke-dasharray="4,2"/>
-          <path d="M 565 240 C 620 200 600 130 580 95" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.75" stroke-dasharray="4,2"/>
-          <path d="M 565 300 L 606 300" fill="none" stroke="#10b981" stroke-width="2" opacity="0.75"/>
-          <path d="M 565 350 L 606 350" fill="none" stroke="#10b981" stroke-width="2" opacity="0.75"/>
+          <!-- 4. 4-Channel Relay Board (Bottom-Right) -->
+          <rect x="420" y="180" width="245" height="230" fill="url(#relayGrad)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+          <text x="542" y="205" fill="#eff6ff" font-size="12" font-weight="bold" text-anchor="middle">4-CHANNEL RELAY BOARD</text>
+          <text x="542" y="220" fill="#bfdbfe" font-size="9" text-anchor="middle">Fan • Light • Door Lock • Water Pump</text>
 
-          <text x="290" y="380" fill="#f87171" font-size="9" font-weight="bold">5V USB POWER</text>
+          <!-- 4x Blue Relay Cubes -->
+          <g fill="#2563eb" stroke="#60a5fa" stroke-width="1">
+            <rect x="435" y="235" width="45" height="70" rx="3"/>
+            <rect x="490" y="235" width="45" height="70" rx="3"/>
+            <rect x="545" y="235" width="45" height="70" rx="3"/>
+            <rect x="600" y="235" width="45" height="70" rx="3"/>
+          </g>
+          <text x="457" y="275" fill="#ffffff" font-size="8" text-anchor="middle">R1</text>
+          <text x="512" y="275" fill="#ffffff" font-size="8" text-anchor="middle">R2</text>
+          <text x="567" y="275" fill="#ffffff" font-size="8" text-anchor="middle">R3</text>
+          <text x="622" y="275" fill="#ffffff" font-size="8" text-anchor="middle">R4</text>
+
+          <!-- Universal Zip-Tie Standoff Pads for Relay -->
+          <g fill="#fbbf24" stroke="#d97706" stroke-width="1">
+            <rect x="430" y="315" width="18" height="12" rx="2"/>
+            <rect x="630" y="315" width="18" height="12" rx="2"/>
+            <rect x="430" y="390" width="18" height="12" rx="2"/>
+            <rect x="630" y="390" width="18" height="12" rx="2"/>
+          </g>
+
+          <!-- PIR Sensor Dome Cutout in Lid (Over Relays) -->
+          <circle cx="542" cy="300" r="28" fill="#e2e8f0" fill-opacity="0.25" stroke="#f1f5f9" stroke-width="2" stroke-dasharray="4,2"/>
+          <text x="542" y="298" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">HC-SR501 PIR</text>
+          <text x="542" y="312" fill="#cbd5e1" font-size="8" text-anchor="middle">(Ø23.6mm Dome in Lid)</text>
+
+          <!-- Bottom Cable Ports -->
+          <!-- 1. External Sensor Probe Exit (Soil Moisture / Door IR) -->
+          <rect x="230" y="426" width="65" height="12" fill="#eab308" stroke="#fde047" stroke-width="1.5" rx="3"/>
+          <text x="262" y="455" fill="#fde047" font-size="9" text-anchor="middle">⬇ Soil/IR Sensor Exit</text>
+
+          <!-- 2. Relay Load Exit (230V AC Mains Fan/Light/Pump Wires) -->
+          <rect x="470" y="426" width="130" height="12" fill="#ef4444" stroke="#f87171" stroke-width="1.5" rx="3"/>
+          <text x="535" y="455" fill="#f87171" font-size="9" font-weight="bold" text-anchor="middle">⬇ 230V AC RELAY LOADS EXIT (34×14mm)</text>
         </svg>
       </div>
 
       <!-- Key Blueprint Callouts -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
         <div class="p-2.5 rounded-lg bg-[var(--card)] border border-[var(--card-border)]">
-          <div class="font-bold text-sky-500 mb-1">🔋 Powerbank Cradle</div>
-          <div class="text-[var(--muted-foreground)]">72 × 151 mm bay fits slim 10,000mAh packs. Recessed bottom opening gives access to USB-C charging port without removing it.</div>
+          <div class="font-bold text-teal-400 mb-1">🌡️ Thermal Isolation Chambers</div>
+          <div class="text-[var(--muted-foreground)]">Solid internal walls physically quarantine the MQ-2 heater (top-right chimney) and DHT11 (bottom-left) to keep sensor readings accurate.</div>
         </div>
         <div class="p-2.5 rounded-lg bg-[var(--card)] border border-[var(--card-border)]">
-          <div class="font-bold text-purple-500 mb-1">⚡ ESP32 Breakout Bay</div>
-          <div class="text-[var(--muted-foreground)]">93 × 151 mm bay on 5mm standoff bosses with 35.6 mm clear vertical headroom so DuPont wire arches fit freely with zero pinching.</div>
+          <div class="font-bold text-purple-400 mb-1">⚡ Universal Zip-Tie Standoffs</div>
+          <div class="text-[var(--muted-foreground)]">Raised pads with 3mm nylon zip-tie slots underneath securely lock down any clone PCB revision without worrying about stripped threads.</div>
         </div>
         <div class="p-2.5 rounded-lg bg-[var(--card)] border border-[var(--card-border)]">
-          <div class="font-bold text-emerald-500 mb-1">🚪 Wall Mount & Cable I/O</div>
-          <div class="text-[var(--muted-foreground)]">Dual 100 mm pitch keyholes hang on wall screws. Bottom & side grommet exits with zip-tie anchors clamp wire bundles safely.</div>
+          <div class="font-bold text-amber-400 mb-1">🛡️ Optical & Acoustic Shields</div>
+          <div class="text-[var(--muted-foreground)]">14mm opaque light shroud blocks internal ESP32 LEDs from reaching the LDR. Clap mic is located far away to decouple relay clicks.</div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- 3D Canvas Rendering Engine (Pure WebGL/Canvas2D 3D Engine) -->
+  <!-- 3D Canvas Rendering Engine -->
   <script>
     (function() {
       const canvas = document.getElementById('canvas3d');
@@ -265,7 +286,6 @@
       const panel3D = document.getElementById('view-3d-panel');
       const panel2D = document.getElementById('view-2d-panel');
 
-      // Tab switching
       btn3D.addEventListener('click', () => {
         btn3D.className = 'px-3 py-1 font-semibold rounded-md transition-colors bg-[var(--primary)] text-[var(--primary-foreground)] shadow-sm';
         btn2D.className = 'px-3 py-1 font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)] rounded-md transition-colors';
@@ -293,16 +313,15 @@
 
       chkWires.addEventListener('change', draw);
 
-      // Camera State
-      let rotX = -0.55; // Pitch
-      let rotZ = 0.65;  // Yaw
+      let rotX = -0.60;
+      let rotZ = 0.70;
       let zoom = 1.35;
       let isDragging = false;
       let lastMouseX = 0, lastMouseY = 0;
 
       btnReset.addEventListener('click', () => {
-        rotX = -0.55;
-        rotZ = 0.65;
+        rotX = -0.60;
+        rotZ = 0.70;
         zoom = 1.35;
         draw();
       });
@@ -317,7 +336,6 @@
       }
       window.addEventListener('resize', resize);
 
-      // Mouse Orbit Controls
       canvas.addEventListener('mousedown', (e) => {
         isDragging = true;
         lastMouseX = e.clientX;
@@ -344,24 +362,19 @@
         draw();
       }, { passive: false });
 
-      // 3D Math Utilities
       function project3D(x, y, z, cx, cy) {
-        // Enclosure center
-        const ox = x - 86;
-        const oy = y - 78;
-        const oz = z - 20;
+        const ox = x - 84;
+        const oy = y - 68;
+        const oz = z - 28;
 
-        // Yaw (around Z)
         const cosZ = Math.cos(rotZ), sinZ = Math.sin(rotZ);
         const x1 = ox * cosZ - oy * sinZ;
         const y1 = ox * sinZ + oy * cosZ;
 
-        // Pitch (around X)
         const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
         const y2 = y1 * cosX - oz * sinX;
         const z2 = y1 * sinX + oz * cosX;
 
-        // Perspective projection
         const dist = 380;
         const scale = (dist / (dist + y2)) * zoom;
 
@@ -372,7 +385,6 @@
         };
       }
 
-      // Draw 3D Box Primitive
       function drawBox(ctx, x, y, z, w, d, h, colors, cx, cy) {
         const p = [
           project3D(x, y, z, cx, cy),
@@ -385,13 +397,12 @@
           project3D(x, y + d, z + h, cx, cy)
         ];
 
-        // Faces: [indices, avgDepth, color]
         const faces = [
-          { pts: [4, 5, 6, 7], col: colors.top },    // Top
-          { pts: [0, 1, 5, 4], col: colors.front },  // Front
-          { pts: [1, 2, 6, 5], col: colors.right },  // Right
-          { pts: [2, 3, 7, 6], col: colors.back },   // Back
-          { pts: [3, 0, 4, 7], col: colors.left }    // Left
+          { pts: [4, 5, 6, 7], col: colors.top },
+          { pts: [0, 1, 5, 4], col: colors.front },
+          { pts: [1, 2, 6, 5], col: colors.right },
+          { pts: [2, 3, 7, 6], col: colors.back },
+          { pts: [3, 0, 4, 7], col: colors.left }
         ];
 
         faces.forEach(f => {
@@ -428,89 +439,95 @@
 
         let renderList = [];
 
-        // 1. Base Enclosure (Outer Shell & Floor)
-        renderList.push(...drawBox(ctx, 0, 0, 0, 172, 156, 38, {
+        // 1. Base Enclosure (168 × 136 × 57 mm)
+        renderList.push(...drawBox(ctx, 0, 0, 0, 168, 136, 57.2, {
           top: '#1e293b', front: '#0f172a', right: '#1e293b', back: '#0f172a', left: '#1e293b'
         }, cx, cy));
 
-        // 2. Interior Floor Cavity (recessed inside base)
-        renderList.push(...drawBox(ctx, 2.4, 2.4, 2.4, 167.2, 151.2, 0.5, {
+        // 2. Interior Floor
+        renderList.push(...drawBox(ctx, 2.8, 2.8, 2.8, 162.4, 130.4, 0.5, {
           top: '#090d16', front: '#090d16', right: '#090d16', back: '#090d16', left: '#090d16'
         }, cx, cy));
 
-        // 3. Internal Divider Wall (between Powerbank and ESP32)
-        renderList.push(...drawBox(ctx, 74, 2.4, 2.4, 2.4, 151.2, 22, {
+        // 3. Main Divider Wall (X = 88 mm)
+        renderList.push(...drawBox(ctx, 88, 2.8, 2.8, 3.0, 130.4, 52, {
           top: '#475569', front: '#334155', right: '#475569', back: '#334155', left: '#334155'
         }, cx, cy));
 
-        // 4. 10,000 mAh Power Bank (Cyan/Blue metallic body in Left Bay)
-        renderList.push(...drawBox(ctx, 5, 6, 2.4, 66, 144, 16, {
-          top: '#0284c7', front: '#0369a1', right: '#075985', back: '#0369a1', left: '#0284c7'
+        // 4. DHT11 Isolation Walls (Bottom-Left)
+        renderList.push(...drawBox(ctx, 2.8, 34, 2.8, 36, 2.4, 52, {
+          top: '#0d9488', front: '#115e59', right: '#0f766e', back: '#115e59', left: '#0d9488'
+        }, cx, cy));
+        renderList.push(...drawBox(ctx, 38.8, 2.8, 2.8, 2.4, 33.6, 52, {
+          top: '#0d9488', front: '#115e59', right: '#0f766e', back: '#115e59', left: '#0d9488'
         }, cx, cy));
 
-        // 5. ESP32 38-Pin Purple Breakout Board (on 5mm standoffs in Right Bay)
-        renderList.push(...drawBox(ctx, 88, 16, 7.4, 63, 78, 1.8, {
+        // 5. MQ-2 Thermal Isolation Wall (Top-Right)
+        renderList.push(...drawBox(ctx, 91, 94, 2.8, 74.2, 2.4, 52, {
+          top: '#b91c1c', front: '#991b1b', right: '#7f1d1d', back: '#991b1b', left: '#b91c1c'
+        }, cx, cy));
+
+        // 6. ESP32 38-Pin Purple Breakout Board (Upper-Left on zip-tie pads)
+        renderList.push(...drawBox(ctx, 20, 45, 8.8, 63, 78, 1.8, {
           top: '#7e22ce', front: '#581c87', right: '#6b21a8', back: '#581c87', left: '#7e22ce'
         }, cx, cy));
 
-        // 6. ESP32 DevKit Controller Module (Mounted on purple breakout)
-        renderList.push(...drawBox(ctx, 105, 29, 9.2, 28, 52, 4.5, {
+        // ESP32 DevKit Chip Module
+        renderList.push(...drawBox(ctx, 37, 58, 10.6, 28, 52, 4.5, {
           top: '#18181b', front: '#09090b', right: '#27272a', back: '#09090b', left: '#18181b'
         }, cx, cy));
 
-        // 7. ESP32 Metal RF Shield Can
-        renderList.push(...drawBox(ctx, 109, 45, 13.7, 18, 20, 2.4, {
-          top: '#e2e8f0', front: '#cbd5e1', right: '#94a3b8', back: '#cbd5e1', left: '#e2e8f0'
+        // 7. 4-Channel Relay Board (Bottom-Right on zip-tie pads)
+        renderList.push(...drawBox(ctx, 98, 12, 8.8, 62, 74, 1.8, {
+          top: '#1e3a8a', front: '#172554', right: '#1e40af', back: '#172554', left: '#1e3a8a'
         }, cx, cy));
 
-        // 8. Front Plate / Lid (Exploded upwards by 'explode' millimeters)
-        const lidZ = 38 + explode;
+        // 4 Blue Relay Cubes
+        for (let i = 0; i < 4; i++) {
+          renderList.push(...drawBox(ctx, 102 + (i * 14), 26, 10.6, 12, 19, 15, {
+            top: '#2563eb', front: '#1d4ed8', right: '#1e40af', back: '#1d4ed8', left: '#2563eb'
+          }, cx, cy));
+        }
+
+        // 8. Front Plate / Lid (Exploded upwards)
+        const lidZ = 57.2 + explode;
         const lidColor = `rgba(226, 232, 240, ${lidAlpha})`;
         const lidSideColor = `rgba(148, 163, 184, ${lidAlpha})`;
 
-        renderList.push(...drawBox(ctx, 0, 0, lidZ, 172, 156, 5, {
+        renderList.push(...drawBox(ctx, 0, 0, lidZ, 168, 136, 2.8, {
           top: lidColor, front: lidSideColor, right: lidSideColor, back: lidSideColor, left: lidSideColor
         }, cx, cy));
 
-        // 9. 16x2 I2C LCD Display (Mounted into Lid)
-        renderList.push(...drawBox(ctx, 14, 105, lidZ + 1.2, 72, 25, 3.5, {
-          top: '#0284c7', front: '#15803d', right: '#166534', back: '#15803d', left: '#15803d'
+        // 9. PIR Dome Sensor on Lid
+        renderList.push(...drawBox(ctx, 116, 42, lidZ + 0.5, 24, 24, 12, {
+          top: 'rgba(255, 255, 255, 0.85)', front: 'rgba(241, 245, 249, 0.8)', right: 'rgba(226, 232, 240, 0.8)', back: 'rgba(241, 245, 249, 0.8)', left: 'rgba(255, 255, 255, 0.85)'
         }, cx, cy));
 
-        // 10. RC522 RFID Target Area (in Lid)
-        renderList.push(...drawBox(ctx, 105, 85, lidZ + 1.2, 41, 61, 2.5, {
-          top: '#2563eb', front: '#1d4ed8', right: '#1e40af', back: '#1d4ed8', left: '#2563eb'
+        // 10. LDR Shroud Tube on Underside of Lid
+        renderList.push(...drawBox(ctx, 12, 72, lidZ - 13, 8, 8, 14, {
+          top: '#0f172a', front: '#1e293b', right: '#0f172a', back: '#1e293b', left: '#0f172a'
         }, cx, cy));
 
-        // 11. Tactile Buttons (Exit & Page Caps)
-        renderList.push(...drawBox(ctx, 32, 75, lidZ + 3.0, 9, 9, 5, {
-          top: '#ea580c', front: '#c2410c', right: '#9a3412', back: '#c2410c', left: '#ea580c'
-        }, cx, cy));
-        renderList.push(...drawBox(ctx, 58, 75, lidZ + 3.0, 9, 9, 5, {
-          top: '#ea580c', front: '#c2410c', right: '#9a3412', back: '#c2410c', left: '#ea580c'
-        }, cx, cy));
-
-        // Depth Sort (Painter's Algorithm: Furthest back drawn first)
         renderList.sort((a, b) => a.depth - b.depth);
         renderList.forEach(item => item.draw());
 
-        // 12. Draw Arched DuPont Jumper Wires (if enabled)
+        // 11. DuPont Wire Harness (if enabled)
         if (showWires) {
           ctx.save();
-          // Wire 1: 5V Power (Red) from power bank to ESP32
-          draw3DWire(ctx, 60, 20, 14, 88, 30, 10, '#ef4444', 2.2, 18, cx, cy);
-          // Wire 2: Ground (Black) from power bank to ESP32
-          draw3DWire(ctx, 60, 25, 14, 88, 36, 10, '#1e293b', 2.2, 16, cx, cy);
-          // Wire 3: I2C SDA/SCL (Yellow/Green) up to 16x2 LCD in Lid
-          draw3DWire(ctx, 115, 80, 12, 50, 105, lidZ - 2, '#eab308', 1.8, 24, cx, cy);
-          draw3DWire(ctx, 120, 80, 12, 56, 105, lidZ - 2, '#22c55e', 1.8, 26, cx, cy);
-          // Wire 4: RFID SPI Bus (Blue) up to RC522 in Lid
-          draw3DWire(ctx, 125, 75, 12, 120, 85, lidZ - 2, '#3b82f6', 1.8, 22, cx, cy);
+          // Wire 1: 5V Power (Red) from left USB slot to ESP32
+          draw3DWire(ctx, 2, 75, 14, 20, 55, 12, '#ef4444', 2.2, 14, cx, cy);
+          // Wire 2: Relay control bus (4 jumper wires crossing divider notch)
+          draw3DWire(ctx, 80, 65, 12, 100, 20, 12, '#3b82f6', 2.0, 18, cx, cy);
+          draw3DWire(ctx, 80, 70, 12, 100, 25, 12, '#10b981', 2.0, 20, cx, cy);
+          draw3DWire(ctx, 80, 75, 12, 100, 30, 12, '#f59e0b', 2.0, 22, cx, cy);
+          // Wire 3: DHT11 signal from thermal chamber
+          draw3DWire(ctx, 20, 20, 8, 30, 48, 12, '#06b6d4', 1.8, 16, cx, cy);
+          // Wire 4: PIR sensor wire to Lid
+          draw3DWire(ctx, 75, 80, 12, 128, 54, lidZ - 2, '#ec4899', 1.8, 25, cx, cy);
           ctx.restore();
         }
       }
 
-      // Bezier 3D Arched Wire
       function draw3DWire(ctx, x1, y1, z1, x2, y2, z2, color, width, arch, cx, cy) {
         const p1 = project3D(x1, y1, z1, cx, cy);
         const p2 = project3D(x2, y2, z2, cx, cy);
@@ -526,7 +543,6 @@
         ctx.stroke();
       }
 
-      // Initial render
       setTimeout(resize, 50);
     })();
   </script>
